@@ -5,10 +5,13 @@ var keys = require("./keys");
 var Spotify = require("node-spotify-api");
 var fs = require("fs");
 var request = require("request");
-// console.log(keys.spotify);
+var queryURL = "http://www.omdbapi.com/?t" + movieTitle + "&r=&plot=short&apikey=trilogy"
+// OMDB query Call
+var movieTitle = process.argv[2];
+
 
 // Then run a request to the OMDB API with the movie specified
-request("http://www.omdbapi.com/?t=remember+the+titans&y=&plot=short&apikey=trilogy", function(error, response, body) {
+request(queryURL, function(error, response, body) {
     if (!error && response.statusCode === 200){
         console.log("The movie's rating is: " + JSON.parse(body).imdbRating);
     }
@@ -23,6 +26,30 @@ fs.readFile("random.txt", "utf8", function(err, data){
     console.log(data);
 });
 
+
+var inquirer = require("inquirer");
+
+// Created a series of questions
+inquirer.prompt([
+
+  {
+    type: "input",
+    name: "username",
+    movieTitle: ""
+  },
+
+]).then(function(inquirerResponse) {
+
+    // If the user guesses the password...
+    if (inquirerResponse.movieTitle) {
+  
+      console.log("Hello");
+    }
+
+  });
+  
+
+
 var spotify = new Spotify(keys.spotify);
 // var client = new Twitter(keys.twitter);
 
@@ -34,7 +61,7 @@ var spotify = new Spotify(keys.spotify);
 
 var nodeArgs = process.argv;
 // process.argv is an array
-console.log(process.argv.length);
+console.log(nodeArgs.length);
 // Obtaining user input into our code
 // console.log(nodeArgs);
 
